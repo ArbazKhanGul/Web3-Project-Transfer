@@ -73,10 +73,14 @@ export const TransactionsProvider = ({ children }) => {
     try {
       if (!ethereum) return alert("Please install MetaMask.");
 
+     
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
       
       if (accounts.length) {
+        if(ethereum.networkVersion!='3'){
+          return alert("Please connect your MetaMask to ropsten testnetwork");
+        }
         setCurrentAccount(accounts[0]);
         getAllTransactions();
       } else {
@@ -110,7 +114,10 @@ export const TransactionsProvider = ({ children }) => {
   const connectWallet = async () => {
     try {
       if (!ethereum) return alert("Please install MetaMask.");
-
+  
+      if(ethereum.networkVersion!='3'){
+        return alert("Please connect your MetaMask to ropsten testnetwork");
+      }
       const accounts = await ethereum.request({ method: "eth_requestAccounts", });
 console.log(accounts);
       setCurrentAccount(accounts[0]);
